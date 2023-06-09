@@ -1,6 +1,6 @@
 const AppTitle = ({
   title = 'Box Office',
-  subtitle = 'Are you looking for a movie or an actor?',
+  subtitle = 'Are you looking for a show or an actor?',
 }) => {
   return (
     <div>

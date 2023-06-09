@@ -1,10 +1,30 @@
-import { useStarredShows } from "../lib/useStarredShows"
+import { useQuery } from 'react-query';
+import { useStarredShows } from '../lib/useStarredShows';
+import { getShowsByIds } from '../api/tvmaze';
+import ShowsGrid from '../components/shows/ShowsGrid';
 
 const Starred = () => {
-  const [starredShows]=useStarredShows();
-  return (
-    <div>Starred page,starred {starredShows.length}</div>
-  )
-}
+  const [starredShowsIds] = useStarredShows();
 
-export default Starred
+  const { data: starredShows, error: starredShowsError } = useQuery({
+    queryKey: ['starred', starredShowsIds],
+    queryFn: async () => getShowsByIds(starredShowsIds).then(result=>result.map(show=>({show})
+    )),
+    refetchOnWindowFocus: false,
+  });
+
+  if(starredShows?.length === 0){
+    return <div>No shows were starred</div>
+  }
+
+  if(starredShows?.length > 0){
+    return <ShowsGrid shows={starredShows}/>
+  }
+
+  if(starredShowsError){
+    <div>Error occured:{starredShowsError.message}</div>
+  }
+  return <div>Shows are Loading</div>;
+};
+
+export default Starred;
