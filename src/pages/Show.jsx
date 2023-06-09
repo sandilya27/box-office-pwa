@@ -1,5 +1,5 @@
 //import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getShowById } from '../api/tvmaze';
 import { useQuery } from 'react-query';
 import ShowsMainData from '../components/shows/ShowsMainData';
@@ -44,6 +44,7 @@ const Show = () => {
   if (showData) {
     return (
       <div>
+        <Link to="/">Go to homepage</Link>
         <ShowsMainData
           image={showData.image}
           name={showData.name}
@@ -65,7 +66,7 @@ const Show = () => {
         </div>
         <div>
           <h2>Cast</h2>
-          <Casts cast={showData._embedded.cast}/>
+          <Casts cast={showData._embedded.cast} />
         </div>
       </div>
     );
