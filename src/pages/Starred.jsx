@@ -2,29 +2,32 @@ import { useQuery } from 'react-query';
 import { useStarredShows } from '../lib/useStarredShows';
 import { getShowsByIds } from '../api/tvmaze';
 import ShowsGrid from '../components/shows/ShowsGrid';
+import { TextCenter } from '../components/common/TextCenter';
 
 const Starred = () => {
   const [starredShowsIds] = useStarredShows();
 
   const { data: starredShows, error: starredShowsError } = useQuery({
     queryKey: ['starred', starredShowsIds],
-    queryFn: async () => getShowsByIds(starredShowsIds).then(result=>result.map(show=>({show})
-    )),
+    queryFn: async () =>
+      getShowsByIds(starredShowsIds).then(result =>
+        result.map(show => ({ show }))
+      ),
     refetchOnWindowFocus: false,
   });
 
-  if(starredShows?.length === 0){
-    return <div>No shows were starred</div>
+  if (starredShows?.length === 0) {
+    return <TextCenter>No shows were starred</TextCenter>;
   }
 
-  if(starredShows?.length > 0){
-    return <ShowsGrid shows={starredShows}/>
+  if (starredShows?.length > 0) {
+    return <ShowsGrid shows={starredShows} />;
   }
 
-  if(starredShowsError){
-    <div>Error occured:{starredShowsError.message}</div>
+  if (starredShowsError) {
+    <TextCenter>Error occured:{starredShowsError.message}</TextCenter>;
   }
-  return <div>Shows are Loading</div>;
+  return <TextCenter>Shows are Loading</TextCenter>;
 };
 
 export default Starred;
