@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useSearchStr } from '../lib/useSearchStr';
+import CoustmRadio from './CoustmRadio';
 
-const SearchForm = ({onSearch}) => {
+const SearchForm = ({ onSearch }) => {
   const [inputValue, setInputValue] = useSearchStr();
   const [searchOption, setSearchOption] = useState('shows');
 
@@ -13,40 +14,34 @@ const SearchForm = ({onSearch}) => {
     setSearchOption(ev.target.value);
   };
 
-  const onSubmit = (ev) =>{
+  const onSubmit = ev => {
     ev.preventDefault();
 
     const options = {
-        q: inputValue,
-        searchOption
-    }
+      q: inputValue,
+      searchOption,
+    };
     onSearch(options);
-  }
+  };
   return (
     <form onSubmit={onSubmit}>
       <input type="text" value={inputValue} onChange={onInputChange} />
 
-      <label>
-        Shows
-        <input
-          type="radio"
-          name="search-option"
-          value="shows"
-          checked={searchOption === 'shows'}
-          onChange={onRadioChange}
-        />
-      </label>
+      <CoustmRadio
+        label="Shows"
+        name="search-option"
+        value="shows"
+        checked={searchOption === 'shows'}
+        onChange={onRadioChange}
+      />
 
-      <label>
-        Actors
-        <input
-          type="radio"
-          name="search-option"
-          value="actors"
-          checked={searchOption === 'actors'}
-          onChange={onRadioChange}
-        />
-      </label>
+      <CoustmRadio
+        label="Actors"
+        name="search-option"
+        value="actors"
+        checked={searchOption === 'actors'}
+        onChange={onRadioChange}
+      />
 
       <button type="submit">Search</button>
     </form>

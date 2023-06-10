@@ -15,7 +15,7 @@ const Home = () => {
         ? searchForShows(filter.q)
         : searchForPeople(filter.q),
     enabled: !!filter,
-    refetchOnWindowFocus:false,
+    refetchOnWindowFocus: false,
   });
 
   /* const [apiData, setApiData] = useState(null);
